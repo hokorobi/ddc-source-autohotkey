@@ -2,18 +2,13 @@ import {
   BaseSource,
   Item,
 } from "https://deno.land/x/ddc_vim@v4.1.0/types.ts";
-import {
-  Denops,
-} from "https://deno.land/x/ddc_vim@v4.1.0/deps.ts";
 
 type Params = Record<never, never>;
 
 export class Source extends BaseSource<Params> {
   _cache: Item[] = [];
 
-  override async onInit(args: {
-    denops: Denops,
-  }): Promise<void> {
+  override onInit() {
     const data = Deno.readFileSync(new URL("../../rc/ahk2.standard.api", import.meta.url));
     const lines = new TextDecoder().decode(data).split(/\r?\n/);
     this._cache = [...new Set(lines)]
